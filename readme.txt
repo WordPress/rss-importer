@@ -4,7 +4,7 @@ Donate link:
 Tags: importer, rss
 Requires at least: 3.0
 Tested up to: 3.0
-Stable tag: 0.1
+Stable tag: 0.2
 
 Import posts from an RSS feed.
 

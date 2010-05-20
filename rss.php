@@ -5,10 +5,13 @@ Plugin URI: http://wordpress.org/extend/plugins/rss-importer/
 Description: Import posts from an RSS feed. This plugin depends on the WP_Importer base class.
 Author: wordpressdotorg
 Author URI: http://wordpress.org/
-Version: 0.1
-Stable tag: 0.1
+Version: 0.2
+Stable tag: 0.2
 License: GPL v2 - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
+
+if ( !defined('WP_LOAD_IMPORTERS') )
+	return;
 
 // Load Importer API
 require_once ABSPATH . 'wp-admin/includes/import.php';
