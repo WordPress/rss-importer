@@ -47,7 +47,7 @@ class RSS_Import extends WP_Importer {
 	function header() {
 		echo '<div class="wrap">';
 		screen_icon();
-		echo '<h2>'.__('Import RSS').'</h2>';
+		echo '<h2>'.__('Import RSS', 'rss-importer').'</h2>';
 	}
 
 	function footer() {
@@ -56,7 +56,7 @@ class RSS_Import extends WP_Importer {
 
 	function greet() {
 		echo '<div class="narrow">';
-		echo '<p>'.__('Howdy! This importer allows you to extract posts from an RSS 2.0 file into your WordPress site. This is useful if you want to import your posts from a system that is not handled by a custom import tool. Pick an RSS file to upload and click Import.').'</p>';
+		echo '<p>'.__('Howdy! This importer allows you to extract posts from an RSS 2.0 file into your WordPress site. This is useful if you want to import your posts from a system that is not handled by a custom import tool. Pick an RSS file to upload and click Import.', 'rss-importer').'</p>';
 		wp_import_upload_form("admin.php?import=rss&amp;step=1");
 		echo '</div>';
 	}
@@ -140,24 +140,24 @@ class RSS_Import extends WP_Importer {
 		echo '<ol>';
 
 		foreach ($this->posts as $post) {
-			echo "<li>".__('Importing post...');
+			echo "<li>".__('Importing post...', 'rss-importer');
 
 			extract($post);
 
 			if ($post_id = post_exists($post_title, $post_content, $post_date)) {
-				_e('Post already imported');
+				_e('Post already imported', 'rss-importer');
 			} else {
 				$post_id = wp_insert_post($post);
 				if ( is_wp_error( $post_id ) )
 					return $post_id;
 				if (!$post_id) {
-					_e('Couldn&#8217;t get post ID');
+					_e('Couldn&#8217;t get post ID', 'rss-importer');
 					return;
 				}
 
 				if (0 != count($categories))
 					wp_create_categories($categories, $post_id);
-				_e('Done!');
+				_e('Done!', 'rss-importer');
 			}
 			echo '</li>';
 		}
@@ -182,7 +182,7 @@ class RSS_Import extends WP_Importer {
 		do_action('import_done', 'rss');
 
 		echo '<h3>';
-		printf(__('All done. <a href="%s">Have fun!</a>'), get_option('home'));
+		printf(__('All done. <a href="%s">Have fun!</a>', 'rss-importer'), get_option('home'));
 		echo '</h3>';
 	}
 
@@ -216,6 +216,11 @@ class RSS_Import extends WP_Importer {
 
 $rss_import = new RSS_Import();
 
-register_importer('rss', __('RSS'), __('Import posts from an RSS feed.'), array ($rss_import, 'dispatch'));
+register_importer('rss', __('RSS', 'rss-importer'), __('Import posts from an RSS feed.', 'rss-importer'), array ($rss_import, 'dispatch'));
 
 } // class_exists( 'WP_Importer' )
+
+function rss_importer_init() {
+    load_plugin_textdomain( 'rss-importer', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+}
+add_action( 'init', 'rss_importer_init' );
