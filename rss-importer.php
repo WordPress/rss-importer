@@ -2,7 +2,7 @@
 /*
 Plugin Name: RSS Importer
 Plugin URI: http://wordpress.org/extend/plugins/rss-importer/
-Description: Import posts from an RSS feed. This plugin depends on the WP_Importer base class.
+Description: Import posts from an RSS feed.
 Author: wordpressdotorg
 Author URI: http://wordpress.org/
 Version: 0.2
