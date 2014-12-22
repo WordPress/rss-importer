@@ -16,7 +16,7 @@ Import posts from an RSS feed.
 
 == Installation ==
 
-1. Upload the rss-importer` folder to the `/wp-content/plugins/` directory
+1. Upload the `rss-importer` folder to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
 1. Go to the Tools -> Import screen, Click on RSS
 
