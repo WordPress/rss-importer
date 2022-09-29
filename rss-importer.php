@@ -69,7 +69,6 @@ class RSS_Import extends WP_Importer {
 	function get_posts() {
 		global $wpdb;
 
-		set_magic_quotes_runtime(0);
 		$datalines = file($this->file); // Read the file into an array
 		$importdata = implode('', $datalines); // squish it
 		$importdata = str_replace(array ("\r\n", "\r"), "\n", $importdata);
