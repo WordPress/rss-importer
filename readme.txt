@@ -1,4 +1,4 @@
-=== Plugin Name ===
+=== RSS Importer ===
 Contributors: wordpressdotorg
 Tags: importer, rss
 Requires at least: 3.0
@@ -24,6 +24,9 @@ Import posts from an RSS feed.
 == Screenshots ==
 
 == Changelog ==
+
+= 0.3 =
+ * Removed `set_magic_quotes_runtime()` for PHP 7 compatibility.
 
 = 0.2 =
 * Update compat
