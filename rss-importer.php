@@ -208,10 +208,6 @@ class RSS_Import extends WP_Importer {
 
 		$this->footer();
 	}
-
-	function RSS_Import() {
-		// Nothing.
-	}
 }
 
 $rss_import = new RSS_Import();
