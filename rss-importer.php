@@ -116,7 +116,11 @@ class RSS_Import extends WP_Importer {
 
 			preg_match('|<content:encoded>(.*?)</content:encoded>|is', $post, $post_content);
 
-			$post_content = str_replace(array ('<![CDATA[', ']]>'), '', esc_sql(trim($post_content[1])));
+			if (count($post_content) > 1) {
+				$post_content = str_replace(array ('<![CDATA[', ']]>'), '', esc_sql(trim($post_content[1])));
+			} else {
+				$post_content = null;
+			}
 
 			if (!$post_content) {
 				// This is for feeds that put content in description
