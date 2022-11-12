@@ -77,7 +77,7 @@ class RSS_Import extends WP_Importer {
 		$index = 0;
 		foreach ($this->posts as $post) {
 			preg_match('|<title>(.*?)</title>|is', $post, $post_title);
-			$post_title = str_replace(array('<![CDATA[', ']]>'), '', $wpdb->escape( trim($post_title[1]) ));
+			$post_title = str_replace(array('<![CDATA[', ']]>'), '', esc_sql( trim($post_title[1]) ));
 
 			preg_match('|<pubdate>(.*?)</pubdate>|is', $post, $post_date_gmt);
 
@@ -104,23 +104,24 @@ class RSS_Import extends WP_Importer {
 
 			$cat_index = 0;
 			foreach ($categories as $category) {
-				$categories[$cat_index] = $wpdb->escape( html_entity_decode( $category ) );
+				$categories[$cat_index] = esc_sql( html_entity_decode( $category ) );
 				$cat_index++;
 			}
 
 			preg_match('|<guid.*?>(.*?)</guid>|is', $post, $guid);
 			if ($guid)
-				$guid = $wpdb->escape(trim($guid[1]));
+				$guid = esc_sql(trim($guid[1]));
 			else
 				$guid = '';
 
 			preg_match('|<content:encoded>(.*?)</content:encoded>|is', $post, $post_content);
-			$post_content = str_replace(array ('<![CDATA[', ']]>'), '', $wpdb->escape(trim($post_content[1])));
+
+			$post_content = str_replace(array ('<![CDATA[', ']]>'), '', esc_sql(trim($post_content[1])));
 
 			if (!$post_content) {
 				// This is for feeds that put content in description
 				preg_match('|<description>(.*?)</description>|is', $post, $post_content);
-				$post_content = $wpdb->escape( html_entity_decode( trim( $post_content[1] ) ) );
+				$post_content = esc_sql( html_entity_decode( trim( $post_content[1] ) ) );
 			}
 
 			// Clean up content
