@@ -47,7 +47,6 @@ class RSS_Import extends WP_Importer {
 
 	function header() {
 		echo '<div class="wrap">';
-		screen_icon();
 		echo '<h2>'.__('Import RSS', 'rss-importer').'</h2>';
 	}
 
