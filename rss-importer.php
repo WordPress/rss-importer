@@ -10,9 +10,9 @@ Stable tag: 0.2
 License: GPL version 2 or later - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 Text Domain: rss-importer
 */
-
-if ( !defined('WP_LOAD_IMPORTERS') )
+if ( !defined('WP_LOAD_IMPORTERS') ) {
 	return;
+}
 
 // Load Importer API
 require_once ABSPATH . 'wp-admin/includes/import.php';
@@ -47,6 +47,11 @@ class RSS_Import extends WP_Importer {
 
 	function header() {
 		echo '<div class="wrap">';
+
+		if ( version_compare(get_bloginfo('version'), '3.8.0', '<') ) {
+			screen_icon();
+		}
+
 		echo '<h2>'.__('Import RSS', 'rss-importer').'</h2>';
 	}
 
