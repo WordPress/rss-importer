@@ -26,7 +26,7 @@ Import posts from an RSS feed.
 == Changelog ==
 
 = 0.3 =
- * Removed `set_magic_quotes_runtime()` for PHP 7 compatibility.
+* Removed `set_magic_quotes_runtime()` for PHP 7 compatibility.
 
 = 0.2 =
 * Update compat
