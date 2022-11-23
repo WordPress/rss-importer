@@ -82,7 +82,7 @@ class RSS_Import extends WP_Importer {
 		$index = 0;
 		foreach ($this->posts as $post) {
 			preg_match('|<title>(.*?)</title>|is', $post, $post_title);
-			$post_title = str_replace(array('<![CDATA[', ']]>'), '', esc_sql( trim($post_title[1]) ));
+			$post_title = str_replace(array('<![CDATA[', ']]>'), '', esc_sql( trim($post_title[1]) ) );
 
 			preg_match('|<pubdate>(.*?)</pubdate>|is', $post, $post_date_gmt);
 
@@ -114,15 +114,16 @@ class RSS_Import extends WP_Importer {
 			}
 
 			preg_match('|<guid.*?>(.*?)</guid>|is', $post, $guid);
-			if ($guid)
-				$guid = esc_sql(trim($guid[1]));
-			else
+			if ( $guid ) {
+				$guid = esc_sql( trim( $guid[1] ) );
+			} else {
 				$guid = '';
+			}
 
 			preg_match('|<content:encoded>(.*?)</content:encoded>|is', $post, $post_content);
 
-			if (count($post_content) > 1) {
-				$post_content = str_replace(array ('<![CDATA[', ']]>'), '', esc_sql(trim($post_content[1])));
+			if ( count( $post_content ) > 1 ) {
+				$post_content = str_replace( array( '<![CDATA[', ']]>'), '', esc_sql( trim( $post_content[1] ) ) );
 			} else {
 				$post_content = null;
 			}
