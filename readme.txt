@@ -2,8 +2,8 @@
 Contributors: wordpressdotorg
 Tags: importer, rss
 Requires at least: 3.0
-Tested up to: 4.7
-Stable tag: trunk
+Tested up to: 6.1
+Stable tag: 0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -27,6 +27,7 @@ Import posts from an RSS feed.
 
 = 0.3 =
 * Removed `set_magic_quotes_runtime()` for PHP 7 compatibility.
+* Add support for WordPress 6.1
 
 = 0.2 =
 * Update compat
