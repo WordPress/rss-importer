@@ -5,14 +5,14 @@ Plugin URI: http://wordpress.org/extend/plugins/rss-importer/
 Description: Import posts from an RSS feed.
 Author: wordpressdotorg
 Author URI: http://wordpress.org/
-Version: 0.2
-Stable tag: 0.2
+Version: 0.3
+Stable tag: 0.3
 License: GPL version 2 or later - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 Text Domain: rss-importer
 */
-
-if ( !defined('WP_LOAD_IMPORTERS') )
+if ( !defined('WP_LOAD_IMPORTERS') ) {
 	return;
+}
 
 // Load Importer API
 require_once ABSPATH . 'wp-admin/includes/import.php';
@@ -47,7 +47,11 @@ class RSS_Import extends WP_Importer {
 
 	function header() {
 		echo '<div class="wrap">';
-		screen_icon();
+
+		if ( version_compare( get_bloginfo( 'version' ), '3.8.0', '<' ) ) {
+			screen_icon();
+		}
+
 		echo '<h2>'.__('Import RSS', 'rss-importer').'</h2>';
 	}
 
@@ -78,7 +82,7 @@ class RSS_Import extends WP_Importer {
 		$index = 0;
 		foreach ($this->posts as $post) {
 			preg_match('|<title>(.*?)</title>|is', $post, $post_title);
-			$post_title = str_replace(array('<![CDATA[', ']]>'), '', $wpdb->escape( trim($post_title[1]) ));
+			$post_title = str_replace(array('<![CDATA[', ']]>'), '', esc_sql( trim($post_title[1]) ) );
 
 			preg_match('|<pubdate>(.*?)</pubdate>|is', $post, $post_date_gmt);
 
@@ -105,23 +109,29 @@ class RSS_Import extends WP_Importer {
 
 			$cat_index = 0;
 			foreach ($categories as $category) {
-				$categories[$cat_index] = $wpdb->escape( html_entity_decode( $category ) );
+				$categories[$cat_index] = esc_sql( html_entity_decode( $category ) );
 				$cat_index++;
 			}
 
 			preg_match('|<guid.*?>(.*?)</guid>|is', $post, $guid);
-			if ($guid)
-				$guid = $wpdb->escape(trim($guid[1]));
-			else
+			if ( $guid ) {
+				$guid = esc_sql( trim( $guid[1] ) );
+			} else {
 				$guid = '';
+			}
 
 			preg_match('|<content:encoded>(.*?)</content:encoded>|is', $post, $post_content);
-			$post_content = str_replace(array ('<![CDATA[', ']]>'), '', $wpdb->escape(trim($post_content[1])));
+
+			if ( count( $post_content ) > 1 ) {
+				$post_content = str_replace( array( '<![CDATA[', ']]>'), '', esc_sql( trim( $post_content[1] ) ) );
+			} else {
+				$post_content = null;
+			}
 
 			if (!$post_content) {
 				// This is for feeds that put content in description
 				preg_match('|<description>(.*?)</description>|is', $post, $post_content);
-				$post_content = $wpdb->escape( html_entity_decode( trim( $post_content[1] ) ) );
+				$post_content = esc_sql( html_entity_decode( trim( $post_content[1] ) ) );
 			}
 
 			// Clean up content
