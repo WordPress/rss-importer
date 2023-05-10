@@ -5,8 +5,8 @@ Plugin URI: http://wordpress.org/extend/plugins/rss-importer/
 Description: Import posts from an RSS feed.
 Author: wordpressdotorg
 Author URI: http://wordpress.org/
-Version: 0.3
-Stable tag: 0.3
+Version: 0.3.1
+Stable tag: 0.3.1
 License: GPL version 2 or later - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 Text Domain: rss-importer
 */
