@@ -62,7 +62,7 @@ msgid "RSS Importer"
 msgstr ""
 
 #. Plugin URI of the plugin/theme
-msgid "http://wordpress.org/extend/plugins/rss-importer/"
+msgid "https://wordpress.org/extend/plugins/rss-importer/"
 msgstr ""
 
 #. Description of the plugin/theme
@@ -76,5 +76,5 @@ msgid "wordpressdotorg"
 msgstr ""
 
 #. Author URI of the plugin/theme
-msgid "http://wordpress.org/"
+msgid "https://wordpress.org/"
 msgstr ""
