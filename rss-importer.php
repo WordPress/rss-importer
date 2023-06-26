@@ -1,13 +1,13 @@
 <?php
 /*
 Plugin Name: RSS Importer
-Plugin URI: http://wordpress.org/extend/plugins/rss-importer/
+Plugin URI: https://wordpress.org/extend/plugins/rss-importer/
 Description: Import posts from an RSS feed.
 Author: wordpressdotorg
-Author URI: http://wordpress.org/
+Author URI: https://wordpress.org/
 Version: 0.3.1
 Stable tag: 0.3.1
-License: GPL version 2 or later - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+License: GPL version 2 or later - https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 Text Domain: rss-importer
 */
 if ( !defined('WP_LOAD_IMPORTERS') ) {
