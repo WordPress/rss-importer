@@ -3,7 +3,7 @@ Contributors: wordpressdotorg
 Tags: importer, rss
 Requires at least: 3.0
 Tested up to: 6.3
-Stable tag: 0.3.2
+Stable tag: 0.3.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -24,9 +24,6 @@ Import posts from an RSS feed.
 == Screenshots ==
 
 == Changelog ==
-
-= 0.3.2 =
-* Testing the plugin up to WordPress 6.3
 
 = 0.3.1 =
 * Testing the plugin up to WordPress 6.2
