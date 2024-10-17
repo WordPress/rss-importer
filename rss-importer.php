@@ -141,7 +141,21 @@ class RSS_Import extends WP_Importer {
 
 			$post_author = 1;
 			$post_status = 'publish';
-			$this->posts[$index] = compact('post_author', 'post_date', 'post_date_gmt', 'post_content', 'post_title', 'post_status', 'guid', 'categories');
+
+			// extract custom fields from post metadata
+			preg_match_all('|<wp:postmeta>(.+?)</wp:postmeta>|is', $post, $postmeta);
+
+			$post_metadata = [];
+			if ($postmeta[1]) {
+				foreach ($postmeta[1] as $p) {
+					$post_metadata[] = array(
+						'key'   => $this->get_tag_value($p, 'wp:meta_key'),
+						'value' => $this->get_tag_value($p, 'wp:meta_value'),
+					);
+				}
+			}
+
+			$this->posts[$index] = compact('post_author', 'post_date', 'post_date_gmt', 'post_content', 'post_title', 'post_status', 'guid', 'categories', 'post_metadata');
 			$index++;
 		}
 	}
@@ -154,7 +168,7 @@ class RSS_Import extends WP_Importer {
 
 			extract($post);
 
-			if ($post_id = post_exists($post_title, $post_content, $post_date)) {
+			if (post_exists($post_title, $post_content, $post_date)) {
 				_e('Post already imported', 'rss-importer');
 			} else {
 				$post_id = wp_insert_post($post);
@@ -165,8 +179,24 @@ class RSS_Import extends WP_Importer {
 					return;
 				}
 
-				if (0 != count($categories))
+				if (0 !== count($categories))
 					wp_create_categories($categories, $post_id);
+
+				// add/update post meta
+				if (0 !== count( $post_metadata )) {
+					foreach ($post_metadata as $metadata) {
+
+						$key = apply_filters( 'rss_import_post_meta_key', $metadata['key'], $post_id, $post );
+
+						if ($key) {
+							$value = $metadata['value'];
+
+							update_post_meta($post_id, wp_slash($key), wp_slash($value));
+							do_action('rss_import_post_meta', $post_id, $key, $value);
+						}
+					}
+				}
+
 				_e('Done!', 'rss-importer');
 			}
 			echo '</li>';
@@ -217,6 +247,24 @@ class RSS_Import extends WP_Importer {
 		}
 
 		$this->footer();
+	}
+
+	/**
+	 * Get value of tag
+	 * @param string $node  XML node
+	 * @param string $nameTag name of tag
+	 *
+	 * @return string
+	 */
+	function get_tag_value( $node, $nameTag ) {
+		preg_match("|<$nameTag.*?>(.*?)</$nameTag>|is", $node, $value_tag);
+		if ($value_tag) {
+			$value_tag = str_replace(array( '<![CDATA[', ']]>' ), '', esc_sql(trim($value_tag[1])));
+		} else {
+			$value_tag = '';
+		}
+
+		return $value_tag;
 	}
 }
 
